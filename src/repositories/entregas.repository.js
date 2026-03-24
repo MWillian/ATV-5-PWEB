@@ -9,7 +9,7 @@ export class EntregasRepository{
 
     async criar(dados){
         const novaEntrega = {
-            id: this.nextId++,
+            id: this.database.generateId(),
             descricao: dados.descricao,
             origem: dados.origem,
             destino: dados.destino,
@@ -24,8 +24,14 @@ export class EntregasRepository{
         return this.database.getEntregas().find((x)=> x.id === id) ?? null;
     }
 
-    async atualizarEntrega(id,dados){
-        const entragaAntiga = this.buscarPorId(id);
-        //implementar depois
+    async atualizarEntrega(id,dadosAtualizados){
+        const index = this.database.entregas.findIndex(e => e.id === id);
+        if (index === -1) return null;
+        this.database.entregas[index] = {
+            ...this.database.entregas[index],
+            ...dadosAtualizados,
+            id
+        };
+        return this.database.entregas[index];
     }
 }

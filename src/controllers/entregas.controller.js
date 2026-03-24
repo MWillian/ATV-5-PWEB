@@ -28,10 +28,17 @@ export class EntregasController{
     }catch(err){ next(err);}
   }
 
-  async atualizarEntrega(req,res,next){
+  async avancar(req,res,next){
     try{
-        const entregaAtualizada = await this.service.atualizarEntrega(Number(req.params.id),req.body);
-        res.json(entregaAtualizada); 
+        await this.service.atualizarEntrega(Number(req.params.id),req.body);
+        res.status(204).json("Status atualizado."); 
+    }catch(err){ next(err);}
+  }
+
+  async cancelar(req,res,next){
+    try{
+      await this.service.cancelarEntrega(Number(req.params.id));
+      res.status(204).json("Status atualizado."); 
     }catch(err){ next(err);}
   }
 }

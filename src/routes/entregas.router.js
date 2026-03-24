@@ -14,8 +14,8 @@ const router = Router();
 router.get('/', controller.listarTodos);
 router.post('/',controller.criar);
 router.get('/:id',controller.buscarPorId);
-// router.patch('/:id/avancar',);
-// router.patch('/:id/cancelar',);
+router.patch('/:id/avancar',controller.avancar);
+router.patch('/:id/cancelar',controller.cancelar);
 // router.get('/:id/historico',);
 //implementar get com filtros
 
