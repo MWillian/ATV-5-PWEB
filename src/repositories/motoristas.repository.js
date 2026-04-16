@@ -1,42 +1,103 @@
+import { pool } from '../config/database.js';
+import { AppError } from '../utils/AppError.js';
+
 export class MotoristasRepository{
     constructor(database){
         this.database = database;
     }
 
     async listarTodos(){
-        return this.database.getMotoristas();
+        const { rows } = await pool.query(
+            `SELECT 
+                id,
+                nome,
+                placa_veiculo AS "placaVeiculo",
+                cpf,
+                status
+             FROM motoristas
+             ORDER BY id`
+        );
+        return rows;
     }
 
     async listarPorStatus(status){
-        const motoristas = this.database.getMotoristas();
-        return motoristas.filter(e => e.status === status);
+        const { rows } = await pool.query(
+            `SELECT 
+                id,
+                nome,
+                placa_veiculo AS "placaVeiculo",
+                cpf,
+                status
+             FROM motoristas
+             WHERE status = $1
+             ORDER BY id`,
+            [status]
+        );
+        return rows;
     }
     
     async buscarPorId(id){
-        return this.database.getMotoristas().find((x) => x.id == id) ?? null;
+        const { rows } = await pool.query(
+            `SELECT 
+                id,
+                nome,
+                placa_veiculo AS "placaVeiculo",
+                cpf,
+                status
+             FROM motoristas
+             WHERE id = $1`,
+            [id]
+        );
+        return rows[0] ?? null;
     }
 
     async buscarPorCpf(cpf){
-        return this.database.getMotoristas().find((x) => x.cpf == cpf) ?? null;
-    }
-
-    async buscarPorCPF(cpf){
-        return this.buscarPorCpf(cpf);
+        const { rows } = await pool.query(
+            `SELECT 
+                id,
+                nome,
+                placa_veiculo AS "placaVeiculo",
+                cpf,
+                status
+             FROM motoristas
+             WHERE cpf = $1`,
+            [cpf]
+        );
+        return rows[0] ?? null;
     }
 
     async criar(dados){
-        const novoMotorista = {
-            id: this.database.generateIdMotoristas(),
-            nome: dados.nome,
-            placaVeiculo: dados.placaVeiculo,
-            cpf: dados.cpf,
-            status: "ATIVO"
+        try {
+            const { rows } = await pool.query(
+                `INSERT INTO motoristas (nome, placa_veiculo, cpf, status)
+                 VALUES ($1, $2, $3, $4)
+                 RETURNING id, nome, placa_veiculo AS "placaVeiculo", cpf, status`,
+                [dados.nome, dados.placaVeiculo, dados.cpf, 'ATIVO']
+            );
+            return rows[0];
+        } catch (error) {
+            if (error?.code === '23505') {
+                throw new AppError('Cpf já cadastrado.', 409);
+            }
+            throw error;
         }
-        this.database.setMotoristas(novoMotorista);
-        return novoMotorista;
     }
 
     async atualizar(id, dados){
-        return this.database.atualizarMotorista(id,dados);
+        try {
+            const { rows } = await pool.query(
+                `UPDATE motoristas 
+                 SET nome = $1, placa_veiculo = $2, cpf = $3, status = $4
+                 WHERE id = $5
+                 RETURNING id, nome, placa_veiculo AS "placaVeiculo", cpf, status`,
+                [dados.nome, dados.placaVeiculo, dados.cpf, dados.status, id]
+            );
+            return rows[0] ?? null;
+        } catch (error) {
+            if (error?.code === '23505') {
+                throw new AppError('Cpf já cadastrado.', 409);
+            }
+            throw error;
+        }
     }
 }

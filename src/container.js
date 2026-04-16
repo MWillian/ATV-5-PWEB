@@ -1,5 +1,3 @@
-import { Database } from '../src/database/database.js';
-
 /** @typedef {import('./repositories/IEntregas.repository.js').IEntregasRepository} IEntregasRepository */
 /** @typedef {import('./repositories/IMotoristas.repository.js').IMotoristasRepository} IMotoristasRepository */
 
@@ -12,13 +10,11 @@ import { MotoristasService } from './services/motoristas.service.js';
 import { EntregasController } from './controllers/entregas.controller.js';
 import { MotoristasController } from './controllers/motoristas.controller.js';
 
-const database = new Database();
-
 /** @type {IEntregasRepository} */
-const entregasRepository = new EntregasRepository(database);
+const entregasRepository = new EntregasRepository();
 
 /** @type {IMotoristasRepository} */
-const motoristasRepository = new MotoristasRepository(database);
+const motoristasRepository = new MotoristasRepository();
 
 const entregasService = new EntregasService(entregasRepository, motoristasRepository);
 const motoristasService = new MotoristasService(motoristasRepository, entregasRepository);
