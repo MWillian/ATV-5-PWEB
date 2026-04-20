@@ -32,9 +32,12 @@ export class EntregasController{
         }
 
         entregas = entregas.filter(entrega => {
+          if (!entrega.createdAt) {
+            return true;
+          }
           const createdAt = new Date(entrega.createdAt);
           if (Number.isNaN(createdAt.getTime())) {
-            return false;
+            return true;
           }
           if (dataInicio && createdAt < dataInicio) {
             return false;
