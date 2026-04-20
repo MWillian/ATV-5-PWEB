@@ -50,14 +50,7 @@ Esta API foi desenvolvida para a gestão logística de entregas e motoristas, ap
 - `dotenv`
 - `@prisma/client`
 - `prisma`
-
-## Mudanças Realizadas nas rotas na etapa atual (ATV 7)
-
-- Relatórios agregados por status de entrega.
-- Relatório de motoristas com entregas em aberto.
-- Novas rotas em [src/routes/relatorios.router.js](src/routes/relatorios.router.js) e integração no roteador principal.
-    
-    
+        
 ##  Documentação da API
 
 **Base URL:** `/api`
