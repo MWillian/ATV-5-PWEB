@@ -1,0 +1,36 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  background: var(--white);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.filter-group { display: flex; flex-direction: column; gap: 5px; }
+
+.filter-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+
+.filter-group select {
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.page-info { font-size: 0.9rem; color: var(--text-muted); }
