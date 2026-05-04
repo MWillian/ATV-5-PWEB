@@ -40,7 +40,6 @@ app.use(injetarLocals);
 
 app.use('/api', router);
 app.use('/painel', painelRouter);
-
 app.use(middlewareDeErros);
 
 export default app;

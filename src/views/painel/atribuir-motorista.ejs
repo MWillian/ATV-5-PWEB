@@ -1,0 +1,58 @@
+<h1>Atribuir Motorista a Entrega</h1>
+
+<% if (typeof sucesso !== 'undefined' && sucesso) { %>
+  <div class="sucesso">
+    <p><%= sucesso %></p>
+  </div>
+<% } %>
+
+<% if (typeof erro !== 'undefined' && erro) { %>
+  <div class="erro">
+    <p><%= erro %></p>
+  </div>
+<% } %>
+
+<form method="POST" action="/painel/atribuir-motorista">
+  <fieldset>
+    <legend>Selecione a Entrega e o Motorista</legend>
+
+    <div>
+      <label for="entregaId">Entrega:</label>
+      <select id="entregaId" name="entregaId" required>
+        <option value="">-- Selecione uma entrega --</option>
+        <% if (entregas && entregas.length > 0) { %>
+          <% entregas.forEach(entrega => { %>
+            <option value="<%= entrega.id %>">
+              ID <%= entrega.id %> - <%= entrega.descricao %> (Status: <%= entrega.status %>)
+            </option>
+          <% }); %>
+        <% } else { %>
+          <option value="" disabled>Nenhuma entrega disponível</option>
+        <% } %>
+      </select>
+    </div>
+
+    <div>
+      <label for="motoristaId">Motorista:</label>
+      <select id="motoristaId" name="motoristaId" required>
+        <option value="">-- Selecione um motorista --</option>
+        <% if (motoristas && motoristas.length > 0) { %>
+          <% motoristas.forEach(motorista => { %>
+            <option value="<%= motorista.id %>">
+              <%= motorista.nome %> (Placa: <%= motorista.placaVeiculo %>, Status: <%= motorista.status %>)
+            </option>
+          <% }); %>
+        <% } else { %>
+          <option value="" disabled>Nenhum motorista disponível</option>
+        <% } %>
+      </select>
+    </div>
+
+    <button type="submit">Atribuir</button>
+    <a href="/painel/entregas">Cancelar</a>
+  </fieldset>
+</form>
+
+<div>
+  <a href="/painel">Voltar</a>
+</div>

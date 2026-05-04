@@ -1,14 +1,17 @@
 import { AppError } from '../../utils/AppError.js';
 
 export class PainelEntregasController {
-    constructor(service) {
+    constructor(service, motoristasService) {
         this.service = service;
+        this.motoristasService = motoristasService;
         this.listarTodos = this.listarTodos.bind(this);
         this.exibirFormularioCriacao = this.exibirFormularioCriacao.bind(this);
         this.criar = this.criar.bind(this);
         this.exibirDetalhe = this.exibirDetalhe.bind(this);
         this.avancarStatus = this.avancarStatus.bind(this);
         this.cancelar = this.cancelar.bind(this);
+        this.exibirAtribuicao = this.exibirAtribuicao.bind(this);
+        this.atribuir = this.atribuir.bind(this);
     }
 
     async listarTodos(req, res, next) {
@@ -125,6 +128,51 @@ export class PainelEntregasController {
         } catch (err) {
             if (err instanceof AppError) {
                 return res.redirect(`/painel/entregas/${req.params.id}?erro=${encodeURIComponent(err.message)}`);
+            }
+            next(err);
+        }
+    }
+
+    async exibirAtribuicao(req, res, next) {
+        try {
+            const entregas = await this.service.listarTodos();
+            const motoristas = await this.motoristasService.listarTodos();
+
+            res.render('painel/atribuir-motorista', {
+                entregas,
+                motoristas,
+                erro: req.query.erro || '',
+                sucesso: req.query.sucesso || ''
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async atribuir(req, res, next) {
+        try {
+            const { motoristaId, entregaId } = req.body;
+
+            if (!motoristaId || !entregaId) {
+                throw new AppError('Motorista e Entrega são obrigatórios.', 400);
+            }
+
+            const idMotorista = Number(motoristaId);
+            const idEntrega = Number(entregaId);
+
+            if (!Number.isInteger(idMotorista) || idMotorista < 1) {
+                throw new AppError('ID do motorista inválido.', 400);
+            }
+
+            if (!Number.isInteger(idEntrega) || idEntrega < 1) {
+                throw new AppError('ID da entrega inválido.', 400);
+            }
+
+            await this.service.atribuirEntrega(idMotorista, idEntrega);
+            res.redirect('/painel/atribuir-motorista?sucesso=Motorista%20atribuído%20com%20sucesso.');
+        } catch (err) {
+            if (err instanceof AppError) {
+                return res.redirect(`/painel/atribuir-motorista?erro=${encodeURIComponent(err.message)}`);
             }
             next(err);
         }

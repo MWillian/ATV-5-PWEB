@@ -1,9 +1,12 @@
+import { AppError } from "../../utils/AppError.js";
+
 export class PainelMotoristasController {
     constructor(service) {
         this.service = service;
         this.listarTodos = this.listarTodos.bind(this);
         this.exibirFormularioCriacao = this.exibirFormularioCriacao.bind(this);
         this.criar = this.criar.bind(this);
+        this.exibirDetalhe = this.exibirDetalhe.bind(this);
     }
 
     async listarTodos(req, res, next) {
@@ -54,6 +57,29 @@ export class PainelMotoristasController {
                 motorista: req.body,
                 erros: { mensagem: err.message }
             });
+        }
+    }
+
+    async exibirDetalhe(req, res, next) {
+        try {
+            const id = Number(req.params.id);
+            const { status, sucesso } = req.query;
+
+            if (!Number.isInteger(id) || id < 1) {
+                throw new AppError('ID inválido.',404);
+            }
+
+            const motorista = await this.service.listarPorId(id);
+            const entregas = await this.service.listarEntregasPorId(id, { status });
+
+            res.render('motoristas/detalhe', {
+                motorista,
+                entregas,
+                statusSelecionado: status || '',
+                sucesso
+            });
+        } catch (err) {
+            next(err);
         }
     }
 }

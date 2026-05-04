@@ -1,0 +1,91 @@
+<h1>Dashboard de Relatórios</h1>
+
+<section class="resumo">
+  <div class="card">
+    <h2>Total de Entregas</h2>
+    <p class="numero"><%= totalEntregas %></p>
+  </div>
+
+  <div class="card">
+    <h2>Motoristas Ativos com Entregas</h2>
+    <p class="numero"><%= totalMotoristas %></p>
+  </div>
+</section>
+
+<section class="relatorios">
+  <h2>Entregas por Status</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Quantidade</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CRIADA</td>
+        <td><%= entregasPorStatus.CRIADA %></td>
+        <td><a href="/painel/entregas?status=CRIADA">Ver</a></td>
+      </tr>
+      <tr>
+        <td>EM TRÂNSITO</td>
+        <td><%= entregasPorStatus.EM_TRANSITO %></td>
+        <td><a href="/painel/entregas?status=EM_TRANSITO">Ver</a></td>
+      </tr>
+      <tr>
+        <td>ENTREGUE</td>
+        <td><%= entregasPorStatus.ENTREGUE %></td>
+        <td><a href="/painel/entregas?status=ENTREGUE">Ver</a></td>
+      </tr>
+      <tr>
+        <td>CANCELADA</td>
+        <td><%= entregasPorStatus.CANCELADA %></td>
+        <td><a href="/painel/entregas?status=CANCELADA">Ver</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 20px;">
+    <a href="/painel/relatorios/entregas-por-status">Ver Relatório Completo</a>
+  </div>
+</section>
+
+<section class="relatorios">
+  <h2>Motoristas Ativos</h2>
+  
+  <% if (motoristasAtivos && motoristasAtivos.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Placa</th>
+          <th>Entregas em Aberto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% motoristasAtivos.forEach(motorista => { %>
+          <tr>
+            <td><%= motorista.id %></td>
+            <td><a href="/painel/motoristas/<%= motorista.id %>"><%= motorista.nome %></a></td>
+            <td><%= motorista.cpf %></td>
+            <td><%= motorista.placaVeiculo %></td>
+            <td><%= motorista._count?.entregaAssignada || 0 %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+      <a href="/painel/relatorios/motoristas-ativos">Ver Relatório Completo</a>
+    </div>
+  <% } else { %>
+    <p>Nenhum motorista ativo com entregas em aberto.</p>
+  <% } %>
+</section>
+
+<div>
+  <a href="/painel">Voltar</a>
+</div>

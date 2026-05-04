@@ -1,0 +1,55 @@
+<h1>Relatório: Motoristas Ativos com Entregas em Aberto</h1>
+
+<section>
+  <h2>Motoristas com Entregas</h2>
+
+  <% if (motoristas && motoristas.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Placa do Veículo</th>
+          <th>Status</th>
+          <th>Entregas em Aberto</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% motoristas.forEach(motorista => { %>
+          <tr>
+            <td><%= motorista.id %></td>
+            <td><%= motorista.nome %></td>
+            <td><%= motorista.cpf %></td>
+            <td><%= motorista.placaVeiculo %></td>
+            <td><%= motorista.status %></td>
+            <td><%= motorista._count?.entregaAssignada || 0 %></td>
+            <td>
+              <a href="/painel/motoristas/<%= motorista.id %>">Ver Detalhe</a>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+      <p><strong>Total de Motoristas Ativos: <%= motoristas.length %></strong></p>
+      <p><strong>Total de Entregas em Aberto: </strong>
+        <% 
+          let totalEntregasAberto = 0;
+          motoristas.forEach(m => {
+            totalEntregasAberto += (m._count?.entregaAssignada || 0);
+          });
+        %>
+        <%= totalEntregasAberto %>
+      </p>
+    </div>
+  <% } else { %>
+    <p>Nenhum motorista ativo com entregas em aberto no momento.</p>
+  <% } %>
+</section>
+
+<div>
+  <a href="/painel/relatorios">Voltar ao Dashboard</a>
+</div>

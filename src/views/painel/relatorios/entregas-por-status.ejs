@@ -1,0 +1,55 @@
+<h1>Relatório: Entregas por Status</h1>
+
+<section>
+  <h2>Resumo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Quantidade</th>
+        <th>Percentual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CRIADA</td>
+        <td><%= entregasPorStatus.CRIADA %></td>
+        <td><%= total > 0 ? ((entregasPorStatus.CRIADA / total) * 100).toFixed(2) : 0 %>%</td>
+      </tr>
+      <tr>
+        <td>EM TRÂNSITO</td>
+        <td><%= entregasPorStatus.EM_TRANSITO %></td>
+        <td><%= total > 0 ? ((entregasPorStatus.EM_TRANSITO / total) * 100).toFixed(2) : 0 %>%</td>
+      </tr>
+      <tr>
+        <td>ENTREGUE</td>
+        <td><%= entregasPorStatus.ENTREGUE %></td>
+        <td><%= total > 0 ? ((entregasPorStatus.ENTREGUE / total) * 100).toFixed(2) : 0 %>%</td>
+      </tr>
+      <tr>
+        <td>CANCELADA</td>
+        <td><%= entregasPorStatus.CANCELADA %></td>
+        <td><%= total > 0 ? ((entregasPorStatus.CANCELADA / total) * 100).toFixed(2) : 0 %>%</td>
+      </tr>
+      <tr style="background-color: #f5f5f5; font-weight: bold;">
+        <td>TOTAL</td>
+        <td><%= total %></td>
+        <td>100.00%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 20px;">
+    <h3>Ações Rápidas</h3>
+    <ul>
+      <li><a href="/painel/entregas?status=CRIADA">Ver Entregas Criadas</a></li>
+      <li><a href="/painel/entregas?status=EM_TRANSITO">Ver Entregas em Trânsito</a></li>
+      <li><a href="/painel/entregas?status=ENTREGUE">Ver Entregas Entregues</a></li>
+      <li><a href="/painel/entregas?status=CANCELADA">Ver Entregas Canceladas</a></li>
+    </ul>
+  </div>
+</section>
+
+<div>
+  <a href="/painel/relatorios">Voltar ao Dashboard</a>
+</div>

@@ -1,0 +1,69 @@
+<h1>Detalhe do Motorista</h1>
+
+<% if (typeof sucesso !== 'undefined' && sucesso) { %>
+  <div class="sucesso">
+    <p><%= sucesso %></p>
+  </div>
+<% } %>
+
+<section>
+  <p><strong>ID:</strong> <%= motorista.id %></p>
+  <p><strong>Nome:</strong> <%= motorista.nome %></p>
+  <p><strong>CPF:</strong> <%= motorista.cpf %></p>
+  <p><strong>Placa:</strong> <%= motorista.placaVeiculo %></p>
+  <p><strong>Status:</strong> <%= motorista.status %></p>
+</section>
+
+<section>
+  <h2>Histórico de Entregas</h2>
+
+  <form method="GET" action="/painel/motoristas/<%= motorista.id %>">
+    <label for="status">Filtrar por status:</label>
+    <select id="status" name="status">
+      <option value="" <%= !statusSelecionado ? 'selected' : '' %>>Todos</option>
+      <option value="CRIADA" <%= statusSelecionado === 'CRIADA' ? 'selected' : '' %>>CRIADA</option>
+      <option value="EM_TRANSITO" <%= statusSelecionado === 'EM_TRANSITO' ? 'selected' : '' %>>EM TRÂNSITO</option>
+      <option value="ENTREGUE" <%= statusSelecionado === 'ENTREGUE' ? 'selected' : '' %>>ENTREGUE</option>
+      <option value="CANCELADA" <%= statusSelecionado === 'CANCELADA' ? 'selected' : '' %>>CANCELADA</option>
+    </select>
+    <button type="submit">Filtrar</button>
+    <a href="/painel/motoristas/<%= motorista.id %>">Limpar</a>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Origem</th>
+        <th>Destino</th>
+        <th>Status</th>
+        <th>Data Criação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (entregas && entregas.length > 0) { %>
+        <% entregas.forEach(entrega => { %>
+          <tr>
+            <td><%= entrega.id %></td>
+            <td><%= entrega.descricao %></td>
+            <td><%= entrega.origem %></td>
+            <td><%= entrega.destino %></td>
+            <td><%= entrega.status %></td>
+            <td><%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %></td>
+            <td><a href="/painel/entregas/<%= entrega.id %>">Ver</a></td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="7">Nenhuma entrega encontrada para este motorista</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<div>
+  <a href="/painel/motoristas">Voltar</a>
+</div>
