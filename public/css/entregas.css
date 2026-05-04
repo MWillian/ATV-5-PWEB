@@ -34,3 +34,8 @@
 }
 
 .page-info { font-size: 0.9rem; color: var(--text-muted); }
+
+.deliver-list-container{
+  max-width: 1336px;
+  margin: auto;
+}

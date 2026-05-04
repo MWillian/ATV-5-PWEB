@@ -1,106 +1,109 @@
 <%- include('../partials/header', { titulo: 'Listagem de Entregas' }) %>
 
-<div class="page-header">
-  <h1>Listagem de Entregas</h1>
-  <a href="/painel/entregas/novo" class="btn btn-primary">+ Nova Entrega</a>
-</div>
+  <div class="deliver-list-container">
+    <div class="page-header">
+      <h1>Listagem de Entregas</h1>
+      <a href="/painel/entregas/novo" class="btn btn-primary">+ Nova Entrega</a>
+    </div>
 
-<% if (typeof sucesso !=='undefined' && sucesso) { %>
-  <div class="alert alert-success">
-    <p>
-      <%= sucesso %>
-    </p>
-  </div>
-  <% } %>
-
-    <form method="GET" action="/painel/entregas" class="filter-bar">
-      <div class="filter-group">
-        <label for="status">Filtrar por status:</label>
-        <select id="status" name="status">
-          <option value="" <%=!statusSelecionado ? 'selected' : '' %>>Todos</option>
-          <option value="CRIADA" <%=statusSelecionado==='CRIADA' ? 'selected' : '' %>>CRIADA</option>
-          <option value="EM_TRANSITO" <%=statusSelecionado==='EM_TRANSITO' ? 'selected' : '' %>>EM TRÂNSITO</option>
-          <option value="ENTREGUE" <%=statusSelecionado==='ENTREGUE' ? 'selected' : '' %>>ENTREGUE</option>
-          <option value="CANCELADA" <%=statusSelecionado==='CANCELADA' ? 'selected' : '' %>>CANCELADA</option>
-        </select>
+    <% if (typeof sucesso !=='undefined' && sucesso) { %>
+      <div class="alert alert-success">
+        <p>
+          <%= sucesso %>
+        </p>
       </div>
-      <button type="submit" class="btn btn-secondary">Filtrar</button>
-      <a href="/painel/entregas" class="btn btn-link">Limpar</a>
-    </form>
+      <% } %>
 
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Origem</th>
-            <th>Destino</th>
-            <th>Status</th>
-            <th>Data Criação</th>
-            <th style="text-align: right;">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if (entregas && entregas.length> 0) { %>
-            <% entregas.forEach(entrega=> { %>
+        <form method="GET" action="/painel/entregas" class="filter-bar">
+          <div class="filter-group">
+            <label for="status">Filtrar por status:</label>
+            <select id="status" name="status">
+              <option value="" <%=!statusSelecionado ? 'selected' : '' %>>Todos</option>
+              <option value="CRIADA" <%=statusSelecionado==='CRIADA' ? 'selected' : '' %>>CRIADA</option>
+              <option value="EM_TRANSITO" <%=statusSelecionado==='EM_TRANSITO' ? 'selected' : '' %>>EM TRÂNSITO</option>
+              <option value="ENTREGUE" <%=statusSelecionado==='ENTREGUE' ? 'selected' : '' %>>ENTREGUE</option>
+              <option value="CANCELADA" <%=statusSelecionado==='CANCELADA' ? 'selected' : '' %>>CANCELADA</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-secondary">Filtrar</button>
+          <a href="/painel/entregas" class="btn btn-link">Limpar</a>
+        </form>
+
+        <div class="table-container">
+          <table>
+            <thead>
               <tr>
-                <td> <strong>
-                    <%= entrega.id %>
-                  </strong></td>
-                <td>
-                  <%= entrega.descricao %>
-                </td>
-                <td>
-                  <%= entrega.origem %>
-                </td>
-                <td>
-                  <%= entrega.destino %>
-                </td>
-                <td>
-                  <%= entrega.status %>
-                </td>
-                <td>
-                  <%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %>
-                </td>
-                <td>
-                  <span class="badge badge-<%= entrega.status.toLowerCase() %>">
-                    <%= entrega.status.replace('_', ' ' ) %>
-                  </span>
-                </td>
-                <td>
-                  <%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %>
-                </td>
-                <td style="text-align: right;">
-                  <a href="/painel/entregas/<%= entrega.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
-                </td>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Origem</th>
+                <th>Destino</th>
+                <th>Status</th>
+                <th>Data Criação</th>
+                <th style="text-align: right;">Ações</th>
               </tr>
-              <% }); %>
-                <% } else { %>
+            </thead>
+            <tbody>
+              <% if (entregas && entregas.length> 0) { %>
+                <% entregas.forEach(entrega=> { %>
                   <tr>
-                    <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Nenhuma entrega
-                      encontrada</td>
+                    <td> <strong>
+                        <%= entrega.id %>
+                      </strong></td>
+                    <td>
+                      <%= entrega.descricao %>
+                    </td>
+                    <td>
+                      <%= entrega.origem %>
+                    </td>
+                    <td>
+                      <%= entrega.destino %>
+                    </td>
+                    <td>
+                      <%= entrega.status %>
+                    </td>
+                    <td>
+                      <%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %>
+                    </td>
+                    <td>
+                      <span class="badge badge-<%= entrega.status.toLowerCase() %>">
+                        <%= entrega.status.replace('_', ' ' ) %>
+                      </span>
+                    </td>
+                    <td>
+                      <%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %>
+                    </td>
+                    <td style="text-align: right;">
+                      <a href="/painel/entregas/<%= entrega.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
+                    </td>
                   </tr>
-                  <% } %>
-        </tbody>
-      </table>
-    </div>
-    <div class="paginacao">
-      <% if (page> 1) { %>
-        <a href="/painel/entregas?page=<%= page - 1 %><%= statusSelecionado ? '&status=' + statusSelecionado : '' %>"
-          class="btn btn-sm btn-outline">Anterior</a>
-        <% } %>
-
-          <span class="page-info">Página <strong>
-              <%= page %>
-            </strong> de <%= totalPages %></span>
-
-          <% if (page < totalPages) { %>
-            <a href="/painel/entregas?page=<%= page + 1 %><%= statusSelecionado ? '&status=' + statusSelecionado : '' %>"
-              class="btn btn-sm btn-outline">Próxima</a>
+                  <% }); %>
+                    <% } else { %>
+                      <tr>
+                        <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Nenhuma
+                          entrega
+                          encontrada</td>
+                      </tr>
+                      <% } %>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <% if (page> 1) { %>
+            <a href="/painel/entregas?page=<%= page - 1 %><%= statusSelecionado ? '&status=' + statusSelecionado : '' %>"
+              class="btn btn-sm btn-outline">Anterior</a>
             <% } %>
-    </div>
 
-    <div class="footer-actions">
-      <a href="/painel" class="btn btn-link">&larr; Voltar ao Painel</a>
-    </div>
+              <span class="page-info">Página <strong>
+                  <%= page %>
+                </strong> de <%= totalPages %></span>
+
+              <% if (page < totalPages) { %>
+                <a href="/painel/entregas?page=<%= page + 1 %><%= statusSelecionado ? '&status=' + statusSelecionado : '' %>"
+                  class="btn btn-sm btn-outline">Próxima</a>
+                <% } %>
+        </div>
+
+        <div class="footer-actions">
+          <a href="/painel" class="btn btn-link">&larr; Voltar ao Painel</a>
+        </div>
+  </div>
