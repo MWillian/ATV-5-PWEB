@@ -1,0 +1,27 @@
+<h1>Nova Entrega</h1>
+
+<% if (typeof erro !== 'undefined' && erro) { %>
+  <div class="erro">
+    <p><%= erro %></p>
+  </div>
+<% } %>
+
+<form method="POST" action="/painel/entregas">
+  <div>
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" name="descricao" required value="<%= entrega.descricao || '' %>">
+  </div>
+
+  <div>
+    <label for="origem">Origem:</label>
+    <input type="text" id="origem" name="origem" required value="<%= entrega.origem || '' %>">
+  </div>
+
+  <div>
+    <label for="destino">Destino:</label>
+    <input type="text" id="destino" name="destino" required value="<%= entrega.destino || '' %>">
+  </div>
+
+  <button type="submit">Criar Entrega</button>
+  <a href="/painel/entregas">Cancelar</a>
+</form>

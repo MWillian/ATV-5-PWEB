@@ -6,9 +6,8 @@ import session from 'express-session';
 import flash from 'connect-flash';
 import { router } from '../src/routes/index.js';
 import { painelRouter } from '../src/routes/painel.router.js';
-
 import methodOverride from 'method-override';
-import { naoEncontrado, middlewareDeErros } from '../src/middlewares/erros.middlewares.js';
+import { middlewareDeErros } from '../src/middlewares/erros.middlewares.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -16,22 +15,16 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', join(__dirname, 'views'));
 app.use(express.static(join(__dirname, '..', 'public')));
-app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(methodOverride((req) => req.body && req.body._method));
 app.use(express.json());
-
-app.use(injetarLocals);
-
-app.use('/api', router);
-app.use('/painel', painelRouter);
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'segredo-dev',
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false },
-}))
+}));
 
 app.use(flash());
 
@@ -43,7 +36,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(naoEncontrado);
+app.use(injetarLocals);
+
+app.use('/api', router);
+app.use('/painel', painelRouter);
+
 app.use(middlewareDeErros);
 
 export default app;

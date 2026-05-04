@@ -4,6 +4,11 @@ export class PainelEntregasController {
     constructor(service) {
         this.service = service;
         this.listarTodos = this.listarTodos.bind(this);
+        this.exibirFormularioCriacao = this.exibirFormularioCriacao.bind(this);
+        this.criar = this.criar.bind(this);
+        this.exibirDetalhe = this.exibirDetalhe.bind(this);
+        this.avancarStatus = this.avancarStatus.bind(this);
+        this.cancelar = this.cancelar.bind(this);
     }
 
     async listarTodos(req, res, next) {
@@ -39,6 +44,88 @@ export class PainelEntregasController {
                 sucesso
             });
         } catch (err) {
+            next(err);
+        }
+    }
+
+    async exibirFormularioCriacao(req, res, next) {
+        try {
+            res.render('entregas/nova', { entrega: {} });
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async criar(req, res, next) {
+        try {
+            const { descricao, origem, destino } = req.body;
+            await this.service.criar({ descricao, origem, destino });
+            res.redirect('/painel/entregas?sucesso=Entrega criada com sucesso.');
+        } catch (err) {
+            if (err instanceof AppError) {
+                return res.render('entregas/nova', {
+                    entrega: req.body,
+                    erro: err.message
+                });
+            }
+            next(err);
+        }
+    }
+
+    async exibirDetalhe(req, res, next) {
+        try {
+            const id = Number(req.params.id);
+
+            if (!Number.isInteger(id) || id < 1) {
+                throw new AppError('ID inválido.', 400);
+            }
+
+            const entrega = await this.service.buscarPorId(id);
+            const historico = await this.service.obterHistorico(id);
+
+            res.render('entregas/detalhe', {
+                entrega,
+                historico: Array.isArray(historico) ? historico : [],
+                sucesso: req.query.sucesso || '',
+                erro: req.query.erro || ''
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async avancarStatus(req, res, next) {
+        try {
+            const id = Number(req.params.id);
+
+            if (!Number.isInteger(id) || id < 1) {
+                throw new AppError('ID inválido.', 400);
+            }
+
+            await this.service.avancarStatus(id);
+            res.redirect(`/painel/entregas/${id}?sucesso=Status%20avancado%20com%20sucesso.`);
+        } catch (err) {
+            if (err instanceof AppError) {
+                return res.redirect(`/painel/entregas/${req.params.id}?erro=${encodeURIComponent(err.message)}`);
+            }
+            next(err);
+        }
+    }
+
+    async cancelar(req, res, next) {
+        try {
+            const id = Number(req.params.id);
+
+            if (!Number.isInteger(id) || id < 1) {
+                throw new AppError('ID inválido.', 400);
+            }
+
+            await this.service.cancelarEntrega(id);
+            res.redirect(`/painel/entregas/${id}?sucesso=Entrega%20cancelada%20com%20sucesso.`);
+        } catch (err) {
+            if (err instanceof AppError) {
+                return res.redirect(`/painel/entregas/${req.params.id}?erro=${encodeURIComponent(err.message)}`);
+            }
             next(err);
         }
     }

@@ -14,5 +14,10 @@ painelRouter.get('/motoristas/novo', painelMotoristasController.exibirFormulario
 painelRouter.post('/motoristas', painelMotoristasController.criar);
 
 painelRouter.get('/entregas', painelEntregasController.listarTodos);
+painelRouter.get('/entregas/novo', painelEntregasController.exibirFormularioCriacao);
+painelRouter.post('/entregas', painelEntregasController.criar);
+painelRouter.get('/entregas/:id', painelEntregasController.exibirDetalhe);
+painelRouter.patch('/entregas/:id/avancar', painelEntregasController.avancarStatus);
+painelRouter.patch('/entregas/:id/cancelar', painelEntregasController.cancelar);
 
 export default painelRouter;

@@ -1,0 +1,55 @@
+<h1>Detalhe da Entrega</h1>
+
+<% if (typeof sucesso !== 'undefined' && sucesso) { %>
+  <div class="sucesso">
+    <p><%= sucesso %></p>
+  </div>
+<% } %>
+
+<% if (typeof erro !== 'undefined' && erro) { %>
+  <div class="erro">
+    <p><%= erro %></p>
+  </div>
+<% } %>
+
+<section>
+  <p><strong>ID:</strong> <%= entrega.id %></p>
+  <p><strong>Descrição:</strong> <%= entrega.descricao %></p>
+  <p><strong>Origem:</strong> <%= entrega.origem %></p>
+  <p><strong>Destino:</strong> <%= entrega.destino %></p>
+  <p><strong>Status:</strong> <%= entrega.status %></p>
+</section>
+
+<section>
+  <h2>Histórico</h2>
+
+  <% if (historico && historico.length > 0) { %>
+    <ol>
+      <% historico.forEach(evento => { %>
+        <li>
+          <strong><%= evento.data %></strong> - <%= evento.descricao %>
+        </li>
+      <% }); %>
+    </ol>
+  <% } else { %>
+    <p>Nenhum histórico disponível.</p>
+  <% } %>
+</section>
+
+<section>
+  <h2>Ações</h2>
+
+  <form method="POST" action="/painel/entregas/<%= entrega.id %>/avancar">
+    <input type="hidden" name="_method" value="PATCH">
+    <button type="submit" <%= entrega.status === 'ENTREGUE' || entrega.status === 'CANCELADA' ? 'disabled' : '' %>>Avançar Status</button>
+  </form>
+
+  <form method="POST" action="/painel/entregas/<%= entrega.id %>/cancelar">
+    <input type="hidden" name="_method" value="PATCH">
+    <button type="submit" <%= entrega.status === 'ENTREGUE' || entrega.status === 'CANCELADA' ? 'disabled' : '' %>>Cancelar</button>
+  </form>
+</section>
+
+<div>
+  <a href="/painel/entregas">Voltar</a>
+</div>
