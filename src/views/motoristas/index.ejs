@@ -1,0 +1,54 @@
+<h1>Listagem de Motoristas</h1>
+
+<% if (typeof sucesso !== 'undefined' && sucesso) { %>
+  <div class="sucesso">
+    <p><%= sucesso %></p>
+  </div>
+<% } %>
+
+<a href="/painel/motoristas/novo">Novo Motorista</a>
+
+<form method="GET" action="/painel/motoristas">
+  <label for="status">Filtrar por status:</label>
+  <select id="status" name="status">
+    <option value="" <%= !statusSelecionado ? 'selected' : '' %>>Todos</option>
+    <option value="ATIVO" <%= statusSelecionado === 'ATIVO' ? 'selected' : '' %>>ATIVO</option>
+    <option value="INATIVO" <%= statusSelecionado === 'INATIVO' ? 'selected' : '' %>>INATIVO</option>
+  </select>
+  <button type="submit">Filtrar</button>
+  <a href="/painel/motoristas">Limpar</a>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Placa</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (motoristas && motoristas.length > 0) { %>
+      <% motoristas.forEach(motorista => { %>
+        <tr>    
+          <td><%= motorista.id %></td>
+          <td><%= motorista.nome %></td>
+          <td><%= motorista.cpf %></td>
+          <td><%= motorista.placaVeiculo %></td>
+          <td><%= motorista.status %></td>
+        </tr>
+      <% }); %>
+    <% } else { %>
+      <tr>
+        <td colspan="5">Nenhum motorista encontrado</td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+<div>
+    <a href="/painel">
+        <button type="button">Voltar</button>
+    </a>
+</div>

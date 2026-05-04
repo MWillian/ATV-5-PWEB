@@ -5,6 +5,8 @@ import { dirname, join } from 'path';
 import session from 'express-session';
 import flash from 'connect-flash';
 import { router } from '../src/routes/index.js';
+import { painelRouter } from '../src/routes/painel.router.js';
+
 import methodOverride from 'method-override';
 import { naoEncontrado, middlewareDeErros } from '../src/middlewares/erros.middlewares.js';
 
@@ -22,6 +24,7 @@ app.use(express.json());
 app.use(injetarLocals);
 
 app.use('/api', router);
+app.use('/painel', painelRouter);
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'segredo-dev',
@@ -40,7 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(naoEncontrado);
+// app.use(naoEncontrado);
 app.use(middlewareDeErros);
 
 export default app;

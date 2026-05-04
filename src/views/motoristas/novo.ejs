@@ -1,0 +1,27 @@
+<h1>Novo Motorista</h1>
+
+<% if (erros && erros.mensagem) { %>
+  <div class="erro">
+    <p><%= erros.mensagem %></p>
+  </div>
+<% } %>
+
+<form method="POST" action="/painel/motoristas">
+  <div>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required value="<%= motorista.nome || '' %>">
+  </div>
+
+  <div>
+    <label for="cpf">CPF:</label>
+    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required value="<%= motorista.cpf || '' %>">
+  </div>
+
+  <div>
+    <label for="placaVeiculo">Placa do Veículo:</label>
+    <input type="text" id="placaVeiculo" name="placaVeiculo" placeholder="ABC-1234" required value="<%= motorista.placaVeiculo || '' %>">
+  </div>
+
+  <button type="submit">Criar Motorista</button>
+  <a href="/painel/motoristas">Cancelar</a>
+</form>
