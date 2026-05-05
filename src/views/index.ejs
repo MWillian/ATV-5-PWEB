@@ -1,1 +1,62 @@
-<%- include('./layouts/base', { titulo }) %>
+<%- include('./partials/header') %>
+
+<div class="container">
+    <%- include('./partials/flash') %>
+    <%- include('./partials/nav') %>
+
+    <div class="deliver-list-container">
+        
+        <div class="page-header" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+            <h1 style="font-size: 1.8rem;">Bem-vindo ao Deliver Tracking 👋</h1>
+            <p style="color: var(--text-muted); font-size: 1rem;">Aqui está o resumo das suas operações de logística hoje.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="dashboard-card">
+                <div class="card-icon" style="background-color: #e0f2fe; color: #0284c7;">📦</div>
+                <div class="card-info">
+                    <span class="card-title">Total de Entregas</span>
+                    <span class="card-value"><%= totalEntregas %></span>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon" style="background-color: #fef3c7; color: #d97706;">🚚</div>
+                <div class="card-info">
+                    <span class="card-title">Em Trânsito</span>
+                    <span class="card-value"><%= entregasEmTransito %></span>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon" style="background-color: #dcfce7; color: #16a34a;">✅</div>
+                <div class="card-info">
+                    <span class="card-title">Concluídas Hoje</span>
+                    <span class="card-value"><%= entregasConcluidas %></span>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon" style="background-color: #f3e8ff; color: #9333ea;">👨‍✈️</div>
+                <div class="card-info">
+                    <span class="card-title">Motoristas Ativos</span>
+                    <span class="card-value"><%= totalMotoristasAtivos %></span>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="quick-actions-section" style="margin-top: 2rem;">
+            <h2>Ações Rápidas</h2>
+            <div class="quick-actions-grid" style="display: flex; gap: 1rem; margin-top: 1rem;">
+              <a href="/painel/entregas/novo" class="btn btn-primary">Nova Entrega</a>
+              <a href="/painel/atribuir-motorista" class="btn btn-secondary">Atribuir Motorista</a>
+              <a href="/painel/motoristas/novo" class="btn btn-outline">Novo Motorista</a>
+            </div>
+        </section>
+
+    </div>
+
+    <%- include('./partials/footer') %>
+</div>

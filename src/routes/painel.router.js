@@ -3,12 +3,7 @@ import { painelMotoristasController, painelEntregasController, painelRelatoriosC
 
 export const painelRouter = Router();
 
-painelRouter.get('/', (req, res) => {
-  res.render('index', {
-    titulo: 'Painel Administrativo - Deliver Tracking',
-  });
-});
-
+painelRouter.get('/',painelRelatoriosController.exibirPainelInicial);
 painelRouter.get('/motoristas', painelMotoristasController.listarTodos);
 painelRouter.get('/motoristas/novo', painelMotoristasController.exibirFormularioCriacao);
 painelRouter.post('/motoristas', painelMotoristasController.criar);
