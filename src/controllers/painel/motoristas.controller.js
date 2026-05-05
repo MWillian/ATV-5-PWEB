@@ -7,11 +7,12 @@ export class PainelMotoristasController {
         this.exibirFormularioCriacao = this.exibirFormularioCriacao.bind(this);
         this.criar = this.criar.bind(this);
         this.exibirDetalhe = this.exibirDetalhe.bind(this);
+        this.inativar = this.inativar.bind(this);
     }
 
     async listarTodos(req, res, next) {
         try {
-                const { status, sucesso } = req.query;
+            const { status, sucesso, erro } = req.query;
             let motoristas;
 
             if (status) {
@@ -20,11 +21,12 @@ export class PainelMotoristasController {
                 motoristas = await this.service.listarTodos();
             }
 
-                res.render('motoristas/index', {
-                    motoristas,
-                    sucesso,
-                    statusSelecionado: status || ''
-                });
+            res.render('motoristas/index', {
+                motoristas,
+                sucesso,
+                erro,
+                statusSelecionado: status || ''
+            });
         } catch (err) {
             next(err);
         }
@@ -66,7 +68,7 @@ export class PainelMotoristasController {
             const { status, sucesso } = req.query;
 
             if (!Number.isInteger(id) || id < 1) {
-                throw new AppError('ID inválido.',404);
+                throw new AppError('ID inválido.', 404);
             }
 
             const motorista = await this.service.listarPorId(id);
@@ -80,6 +82,14 @@ export class PainelMotoristasController {
             });
         } catch (err) {
             next(err);
+        }
+    }
+    async inativar(req, res, next) {
+        try {
+            const motoristaCancelado = await this.service.inativar(Number(req.params.id));
+            res.redirect('/painel/motoristas?sucesso=Motorista inativado com sucesso');
+        } catch (err) {
+            res.redirect(`/painel/motoristas?erro=${encodeURIComponent(err.message)}`);
         }
     }
 }

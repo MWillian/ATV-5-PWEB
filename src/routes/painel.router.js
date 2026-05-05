@@ -13,6 +13,7 @@ painelRouter.get('/motoristas', painelMotoristasController.listarTodos);
 painelRouter.get('/motoristas/novo', painelMotoristasController.exibirFormularioCriacao);
 painelRouter.post('/motoristas', painelMotoristasController.criar);
 painelRouter.get('/motoristas/:id', painelMotoristasController.exibirDetalhe);
+painelRouter.get('/motoristas/:id/inativar', painelMotoristasController.inativar);
 
 painelRouter.get('/entregas', painelEntregasController.listarTodos);
 painelRouter.get('/entregas/novo', painelEntregasController.exibirFormularioCriacao);

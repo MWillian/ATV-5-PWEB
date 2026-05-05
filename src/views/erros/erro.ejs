@@ -1,5 +1,10 @@
-<div class="error-page">
-    <h1 class="error-code"><%= codigo %></h1>
-    <p class="error-message"><%= mensagem %></p>
-    <a href="/" class="btn btn-primary">Voltar ao início</a>
+<%- include('../partials/header', { titulo: 'Erro' }) %>
+
+<div class="container">
+    <div class="error-page">
+        <h1 class="error-code">Erro <%= codigo %></h1>
+        <a href="/painel" class="btn btn-primary">Voltar ao início</a>
+    </div>
 </div>
+
+<%- include('../partials/footer') %>

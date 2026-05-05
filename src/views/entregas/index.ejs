@@ -29,7 +29,7 @@
           <a href="/painel/entregas" class="btn btn-link">Limpar</a>
         </form>
 
-        <div class="data-grid" style="grid-template-columns: 60px 1.5fr 1fr 1fr 150px 120px 130px;">
+        <div class="data-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
           <div class="data-grid-header">
             <div class="data-grid-cell-header">ID</div>
             <div class="data-grid-cell-header">Descrição</div>
@@ -37,7 +37,7 @@
             <div class="data-grid-cell-header">Destino</div>
             <div class="data-grid-cell-header">Status</div>
             <div class="data-grid-cell-header">Data Criação</div>
-            <div class="data-grid-cell-header" style="justify-content: flex-end;">Ações</div>
+            <div class="data-grid-cell-header">Ações</div>
           </div>
           
           <% if (entregas && entregas.length> 0) { %>
@@ -55,7 +55,7 @@
                 <div class="data-grid-cell">
                   <%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %>
                 </div>
-                <div class="data-grid-cell" style="justify-content: flex-end;">
+                <div class="data-grid-cell">
                   <a href="/painel/entregas/<%= entrega.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
                 </div>
               </div>

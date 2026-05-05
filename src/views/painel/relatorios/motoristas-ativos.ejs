@@ -10,7 +10,7 @@
     <h2>Motoristas com Entregas</h2>
 
     <% if (motoristas && motoristas.length > 0) { %>
-      <div class="data-grid" style="grid-template-columns: 60px 1.5fr 140px 140px 100px 160px 130px;">
+      <div class="data-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
         <div class="data-grid-header">
           <div class="data-grid-cell-header">ID</div>
           <div class="data-grid-cell-header">Nome</div>
@@ -18,7 +18,7 @@
           <div class="data-grid-cell-header">Placa do Veículo</div>
           <div class="data-grid-cell-header">Status</div>
           <div class="data-grid-cell-header">Entregas em Aberto</div>
-          <div class="data-grid-cell-header" style="justify-content: flex-end;">Ação</div>
+          <div class="data-grid-cell-header">Ação</div>
         </div>
         
         <% motoristas.forEach(motorista => { %>
@@ -33,7 +33,7 @@
               </span>
             </div>
             <div class="data-grid-cell"><strong><%= motorista.entregasEmAberto || 0 %></strong></div>
-            <div class="data-grid-cell" style="justify-content: flex-end;">
+            <div class="data-grid-cell">
               <a href="/painel/motoristas/<%= motorista.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
             </div>
           </div>

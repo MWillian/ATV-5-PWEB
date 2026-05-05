@@ -59,46 +59,42 @@
       <button type="submit" class="btn btn-secondary">Filtrar</button>
       <a href="/painel/motoristas/<%= motorista.id %>" class="btn btn-link">Limpar</a>
     </form>
-
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Origem</th>
-            <th>Destino</th>
-            <th>Status</th>
-            <th>Data Criação</th>
-            <th style="text-align: right;">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if (entregas && entregas.length > 0) { %>
-            <% entregas.forEach(entrega => { %>
-              <tr>
-                <td><strong><%= entrega.id %></strong></td>
-                <td><%= entrega.descricao %></td>
-                <td><%= entrega.origem %></td>
-                <td><%= entrega.destino %></td>
-                <td>
-                  <span class="badge badge-<%= entrega.status.toLowerCase() %>">
-                    <%= entrega.status.replace('_', ' ') %>
-                  </span>
-                </td>
-                <td><%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %></td>
-                <td style="text-align: right;">
-                  <a href="/painel/entregas/<%= entrega.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
-                </td>
-              </tr>
-            <% }); %>
-          <% } else { %>
-            <tr>
-              <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Nenhuma entrega encontrada para este motorista</td>
-            </tr>
-          <% } %>
-        </tbody>
-      </table>
+    <div class="data-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+      <div class="data-grid-header">
+        <div class="data-grid-cell-header">ID</div>
+        <div class="data-grid-cell-header">Descrição</div>
+        <div class="data-grid-cell-header">Origem</div>
+        <div class="data-grid-cell-header">Destino</div>
+        <div class="data-grid-cell-header">Status</div>
+        <div class="data-grid-cell-header">Data Criação</div>
+        <div class="data-grid-cell-header" style="text-align: right;">Ações</div>
+      </div>
+      
+      <% if (entregas && entregas.length > 0) { %>
+        <% entregas.forEach(entrega => { %>
+          <div class="data-grid-row">
+            <div class="data-grid-cell"><strong><%= entrega.id %></strong></div>
+            <div class="data-grid-cell"><%= entrega.descricao %></div>
+            <div class="data-grid-cell"><%= entrega.origem %></div>
+            <div class="data-grid-cell"><%= entrega.destino %></div>
+            <div class="data-grid-cell">
+              <span class="badge badge-<%= entrega.status.toLowerCase() %>">
+                <%= entrega.status.replace('_', ' ') %>
+              </span>
+            </div>
+            <div class="data-grid-cell">
+              <%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %>
+            </div>
+            <div class="data-grid-cell" style="text-align: right;">
+              <a href="/painel/entregas/<%= entrega.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="data-grid-row" style="grid-column: 1 / -1; justify-content: center; padding: 40px; color: var(--text-muted);">
+          Nenhuma entrega encontrada para este motorista
+        </div>
+      <% } %>
     </div>
   </section>
 </div>
