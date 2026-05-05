@@ -15,12 +15,13 @@ export class MotoristasService{
     }
 
     async listarComFiltros(status){
-        const valoresValidos = ['CRIADA', 'EM_TRANSITO', 'ENTREGUE', 'CANCELADA'];
-        if (!valoresValidos.includes(status)){
+        const statusFiltro = String(status).toUpperCase();
+        const valoresValidos = ['ATIVO', 'INATIVO'];
+        if (!valoresValidos.includes(statusFiltro)){
             throw new AppError(`Status inválido: ${status}`, 400);
         }
         const motoristas = await this.repository.listarTodos();
-        return motoristas.filter(motorista => motorista.status === status);
+        return motoristas.filter(motorista => motorista.status === statusFiltro);
     }
 
     async listarPorId(id){

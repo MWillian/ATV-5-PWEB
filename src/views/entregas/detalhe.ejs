@@ -1,0 +1,88 @@
+<%- include('../partials/header', { titulo: 'Detalhe da Entrega' }) %>
+
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Detalhe da Entrega #<%= entrega.id %></h1>
+    <a href="/painel/entregas" class="btn btn-link">&larr; Voltar</a>
+  </div>
+
+  <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+    <div class="alert alert-success">
+      <p><%= sucesso %></p>
+    </div>
+  <% } %>
+
+  <% if (typeof erro !== 'undefined' && erro) { %>
+    <div class="alert alert-danger">
+      <p><%= erro %></p>
+    </div>
+  <% } %>
+
+  <section class="detail-secti  on detail-card">
+    <div class="detail-card-header">
+      <h2>Informações da Entrega</h2>
+      <span class="badge badge-<%= entrega.status.toLowerCase() %>">
+        <%= entrega.status.replace('_', ' ') %>
+      </span>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-item">
+        <span class="detail-label">ID</span>
+        <p class="detail-value"><%= entrega.id %></p>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Descricao</span>
+        <p class="detail-value"><%= entrega.descricao %></p>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Origem</span>
+        <p class="detail-value"><%= entrega.origem %></p>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Destino</span>
+        <p class="detail-value"><%= entrega.destino %></p>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Criada em</span>
+        <p class="detail-value"><%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="history-detail-section">
+    <h2>Historico de Movimentacoes</h2>
+
+    <% if (historico && historico.length > 0) { %>
+      <ol class="timeline">
+        <% historico.forEach(evento => { %>
+          <li class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+              <p class="timeline-date"><%= evento.data %></p>
+              <p class="timeline-text"><%= evento.descricao %></p>
+            </div>
+          </li>
+        <% }); %>
+      </ol>
+    <% } else { %>
+      <p class="empty-history">Nenhum historico disponivel.</p>
+    <% } %>
+  </section>
+
+  <section class="actions-section">
+    <h2>Ações</h2>
+    <div class="actions-grid actions-grid-end">
+      <form method="POST" action="/painel/entregas/<%= entrega.id %>/avancar" class="action-form">
+        <% let statusString = (entrega.status === 'ENTREGUE' || entrega.status === 'CANCELADA' ? 'disabled': '')%>
+        <input type="hidden" name="_method" value="PATCH">
+        <button type="submit" class="btn btn-primary <%= statusString %>" <% statusString %> %>>Avançar Status</button>
+      </form>
+
+      <form method="POST" action="/painel/entregas/<%= entrega.id %>/cancelar" class="action-form">
+        <input type="hidden" name="_method" value="PATCH">
+        <button type="submit" class="btn btn-danger <%= statusString %>" <% statusString %>>Cancelar Entrega</button>
+      </form>
+    </div>
+  </section>
+</div>

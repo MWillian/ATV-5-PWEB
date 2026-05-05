@@ -12,6 +12,9 @@ import { RelatoriosService } from './services/relatorios.service.js';
 import { EntregasController } from './controllers/entregas.controller.js';
 import { MotoristasController } from './controllers/motoristas.controller.js';
 import { RelatoriosController } from './controllers/relatorios.controller.js';
+import { PainelMotoristasController } from './controllers/painel/motoristas.controller.js';
+import { PainelEntregasController } from './controllers/painel/entregas.controller.js';
+import { PainelRelatoriosController } from './controllers/painel/relatorios.controller.js';
 
 /** @type {IEntregasRepository} */
 const entregasRepository = new EntregasRepository();
@@ -28,4 +31,8 @@ const entregasController = new EntregasController(entregasService);
 const motoristasController = new MotoristasController(motoristasService);
 const relatoriosController = new RelatoriosController(relatoriosService);
 
-export { entregasController, motoristasController, relatoriosController };
+const painelMotoristasController = new PainelMotoristasController(motoristasService);
+const painelEntregasController = new PainelEntregasController(entregasService, motoristasService);
+const painelRelatoriosController = new PainelRelatoriosController(relatoriosService);
+
+export { entregasController, motoristasController, relatoriosController, painelMotoristasController, painelEntregasController, painelRelatoriosController };

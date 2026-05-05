@@ -1,6 +1,6 @@
-export class MotoristasController{
-    constructor(service){
-        this.service = service; 
+export class MotoristasController {
+    constructor(service) {
+        this.service = service;
         this.listarTodos = this.listarTodos.bind(this);
         this.listarPorId = this.listarPorId.bind(this);
         this.criar = this.criar.bind(this);
@@ -8,31 +8,31 @@ export class MotoristasController{
         this.inativarMotorista = this.inativarMotorista.bind(this);
     }
 
-    async listarTodos(req, res, next){
+    async listarTodos(req, res, next) {
         try {
             const { status } = req.query;
             let motoristas;
             if (status) {
                 motoristas = await this.service.listarComFiltros(status);
-            }else{
+            } else {
                 motoristas = await this.service.listarTodos();
             };
             res.json(motoristas);
-        } catch(err) {
+        } catch (err) {
             next(err);
         };
     };
 
-    async listarPorId(req, res, next){
-        try{
+    async listarPorId(req, res, next) {
+        try {
             const motorista = await this.service.listarPorId(Number(req.params.id));
             res.json(motorista);
-        } catch (err){
+        } catch (err) {
             next(err);
         }
     }
 
-    async criar(req,res,next){
+    async criar(req, res, next) {
         try {
             const novoMotorista = await this.service.criar(req.body);
             res.status(201).json(novoMotorista);
@@ -41,7 +41,7 @@ export class MotoristasController{
         };
     };
 
-    async inativarMotorista(req,res,next){
+    async inativarMotorista(req, res, next) {
         try {
             const motoristaCancelado = await this.service.inativar(Number(req.params.id));
             res.status(200).json({
@@ -52,7 +52,7 @@ export class MotoristasController{
         }
     }
 
-    async listarEntregas(req,res,next){
+    async listarEntregas(req, res, next) {
         try {
             const filtros = req.query;
             const id = req.params.id;
@@ -62,5 +62,5 @@ export class MotoristasController{
             next(err);
         }
     }
-    
+
 };

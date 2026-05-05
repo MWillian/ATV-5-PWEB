@@ -1,0 +1,40 @@
+<%- include('../partials/header', { titulo: 'Novo Motorista' }) %>
+
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Criar Novo Motorista</h1>
+    <a href="/painel/motoristas" class="btn btn-link">&larr; Voltar</a>
+  </div>
+
+  <% if (erros && erros.mensagem) { %>
+    <div class="alert alert-danger">
+      <p><%= erros.mensagem %></p>
+    </div>
+  <% } %>
+
+  <div class="form-wrapper">
+    <section class="detail-card">
+      <form method="POST" action="/painel/motoristas" class="form-container">
+        <div class="form-group">
+          <label for="nome" class="detail-label">Nome:</label>
+          <input type="text" id="nome" name="nome" required value="<%= motorista.nome || '' %>" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="cpf" class="detail-label">CPF:</label>
+          <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required value="<%= motorista.cpf || '' %>" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="placaVeiculo" class="detail-label">Placa do Veículo:</label>
+          <input type="text" id="placaVeiculo" name="placaVeiculo" placeholder="ABC-1234" required value="<%= motorista.placaVeiculo || '' %>" class="form-input">
+        </div>
+
+        <div class="form-actions">
+          <a href="/painel/motoristas" class="btn btn-outline">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Criar Motorista</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

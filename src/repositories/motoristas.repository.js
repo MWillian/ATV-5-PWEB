@@ -4,7 +4,7 @@ import { prisma } from '../config/database.js';
 const mapMotorista = motorista => ({
     id: motorista.id,
     nome: motorista.nome,
-    placaVeiculo: motorista.placaVeiculo,
+    placaVeiculo: motorista.placa_veiculo,
     cpf: motorista.cpf,
     status: motorista.status,
     createdAt: motorista.createdAt,
@@ -70,7 +70,7 @@ export class MotoristasRepository{
                 where: { id },
                 data: {
                     nome: dados.nome,
-                    placaVeiculo: dados.placaVeiculo,
+                    placa_veiculo: dados.placaVeiculo,
                     cpf: dados.cpf,
                     status: dados.status
                 }

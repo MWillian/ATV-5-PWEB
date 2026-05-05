@@ -1,0 +1,93 @@
+<%- include('../../partials/header', { titulo: 'Dashboard de Relatórios' }) %>
+
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Dashboard de Relatórios</h1>
+    <a href="/painel" class="btn btn-link">&larr; Voltar</a>
+  </div>
+
+  <section class="detail-card">
+    <h2>Resumo Geral</h2>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <strong class="detail-label">Total de Entregas no sistema</strong>
+        <p class="detail-value" style="font-size: 2rem; font-weight: bold; color: var(--primary);"><%= totalEntregas %></p>
+      </div>
+
+      <div class="detail-item">
+        <strong class="detail-label">Motoristas Ativos com entregas atribuídas</strong>
+        <p class="detail-value" style="font-size: 2rem; font-weight: bold; color: var(--primary);"><%= totalMotoristas %></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="relatorios detail-section">
+    <h2>Entregas por Status</h2>
+    <div class="data-grid-dashboard">
+      <div class="data-grid-header">
+        <div class="data-grid-cell-header">Status</div>
+        <div class="data-grid-cell-header">Quantidade</div>
+        <div class="data-grid-cell-header">Ação</div>
+      </div>
+      
+      <div class="data-grid-row">
+        <div class="data-grid-cell">CRIADA</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.CRIADA %></div>
+        <div class="data-grid-cell"><a href="/painel/entregas?status=CRIADA" class="btn btn-sm btn-outline">Ver</a></div>
+      </div>
+      <div class="data-grid-row">
+        <div class="data-grid-cell">EM TRÂNSITO</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.EM_TRANSITO %></div>
+        <div class="data-grid-cell"><a href="/painel/entregas?status=EM_TRANSITO" class="btn btn-sm btn-outline">Ver</a></div>
+      </div>
+      <div class="data-grid-row">
+        <div class="data-grid-cell">ENTREGUE</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.ENTREGUE %></div>
+        <div class="data-grid-cell"><a href="/painel/entregas?status=ENTREGUE" class="btn btn-sm btn-outline">Ver</a></div>
+      </div>
+      <div class="data-grid-row">
+        <div class="data-grid-cell">CANCELADA</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.CANCELADA %></div>
+        <div class="data-grid-cell"><a href="/painel/entregas?status=CANCELADA" class="btn btn-sm btn-outline">Ver</a></div>
+      </div>
+    </div>
+
+    <div class="form-actions" style="margin-top: 20px; justify-content: center;">
+      <a href="/painel/relatorios/entregas-por-status" class="btn btn-primary" style="width: 100%; justify-content: center;">Ver Relatório Completo</a>
+    </div>
+  </section>
+
+  <section class="relatorios detail-section">
+    <h2>Motoristas Ativos com entregas</h2>
+    
+    <% if (motoristasAtivos && motoristasAtivos.length > 0) { %>
+      <div class="data-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
+        <div class="data-grid-header">
+          <div class="data-grid-cell-header">ID</div>
+          <div class="data-grid-cell-header">Nome</div>
+          <div class="data-grid-cell-header">CPF</div>
+          <div class="data-grid-cell-header">Entregas em Aberto</div>
+          <div class="data-grid-cell-header">Ação</div>
+        </div>
+        
+        <% motoristasAtivos.forEach(motorista => { %>
+          <div class="data-grid-row">
+            <div class="data-grid-cell"><strong><%= motorista.id %></strong></div>
+            <div class="data-grid-cell"><%= motorista.nome %></div>
+            <div class="data-grid-cell"><%= motorista.cpf %></div>
+            <div class="data-grid-cell"><%= motorista.entregasEmAberto %></div>
+            <div class="data-grid-cell">
+              <a href="/painel/motoristas/<%= motorista.id %>" class="btn btn-sm btn-outline">Ver</a>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+
+      <div class="form-actions" style="margin-top: 20px; justify-content: center;">
+        <a href="/painel/relatorios/motoristas-ativos" class="btn btn-primary" style="width: 100%; justify-content: center;">Ver Relatório Completo</a>
+      </div>
+    <% } else { %>
+      <p style="color: var(--text-muted);">Nenhum motorista ativo com entregas em aberto.</p>
+    <% } %>
+  </section>
+</div>

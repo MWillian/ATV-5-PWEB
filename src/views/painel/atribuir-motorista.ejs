@@ -1,0 +1,67 @@
+<%- include('../partials/header', { titulo: 'Atribuir Motorista' }) %>
+
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Atribuir Motorista a Entrega</h1>
+    <a href="/painel" class="btn btn-link">&larr; Voltar</a>
+  </div>
+
+  <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+    <div class="alert alert-success">
+      <p><%= sucesso %></p>
+    </div>
+  <% } %>
+
+  <% if (typeof erro !== 'undefined' && erro) { %>
+    <div class="alert alert-danger">
+      <p><%= erro %></p>
+    </div>
+  <% } %>
+
+  <div class="form-wrapper">
+    <section class="detail-card">
+      <form method="POST" action="/painel/atribuir-motorista" class="form-container">
+        <fieldset class="driver-assign-wrapper" style="border: none; padding: 0;">
+          <legend class="detail-label" style="margin-bottom: 20px; font-size: 16px; font-weight: bold; color: var(--text-main);">Selecione a Entrega e o Motorista</legend>
+
+          <div class="form-group">
+            <label for="entregaId" class="detail-label">Entrega:</label>
+            <select id="entregaId" name="entregaId" required class="form-input">
+              <option value="">-- Selecione uma entrega --</option>
+              <% if (entregas && entregas.length > 0) { %>
+                <% entregas.forEach(entrega => { %>
+                  <option value="<%= entrega.id %>">
+                    ID <%= entrega.id %> - <%= entrega.descricao %> (Status: <%= entrega.status %>)
+                  </option>
+                <% }); %>
+              <% } else { %>
+                <option value="" disabled>Nenhuma entrega disponível</option>
+              <% } %>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="motoristaId" class="detail-label">Motorista:</label>
+            <select id="motoristaId" name="motoristaId" required class="form-input">
+              <option value="">-- Selecione um motorista --</option>
+              <% if (motoristas && motoristas.length > 0) { %>
+                <% motoristas.forEach(motorista => { %>
+                  <option value="<%= motorista.id %>">
+                    <%= motorista.nome %> (Placa: <%= motorista.placaVeiculo %>, Status: <%= motorista.status %>)
+                  </option>
+                <% }); %>
+              <% } else { %>
+                <option value="" disabled>Nenhum motorista disponível</option>
+              <% } %>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <a href="/painel" class="btn btn-outline">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Atribuir</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </div>
+</div>

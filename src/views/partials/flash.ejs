@@ -1,0 +1,20 @@
+<% if (locals && locals.flash) { %>
+  <% const sucesso = Array.isArray(locals.flash.sucesso) ? locals.flash.sucesso : (locals.flash.sucesso ? [locals.flash.sucesso] : []); %>
+  <% const erro = Array.isArray(locals.flash.erro) ? locals.flash.erro : (locals.flash.erro ? [locals.flash.erro] : []); %>
+
+  <% if (sucesso.length > 0) { %>
+    <div class="alert alert-success">
+      <% sucesso.forEach(msg => { %>
+        <div><%= msg %></div>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <% if (erro.length > 0) { %>
+    <div class="alert alert-danger">
+      <% erro.forEach(msg => { %>
+        <div><%= msg %></div>
+      <% }); %>
+    </div>
+  <% } %>
+<% } %>

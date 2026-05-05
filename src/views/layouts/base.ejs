@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+    <div class="container">
+        <%- include('../partials/flash') %>
+            <%- include('../partials/nav') %>
+                <div class="deliver-list-container">
+
+                    <div class="page-header" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                        <h1 style="font-size: 1.8rem;">Bem-vindo ao Deliver Tracking 👋</h1>
+                        <p style="color: var(--text-muted); font-size: 1rem;">Aqui está o resumo das suas operações de
+                            logística hoje.</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+
+                        <div class="dashboard-card">
+                            <div class="card-icon" style="background-color: #e0f2fe; color: #0284c7;">📦</div>
+                            <div class="card-info">
+                                <span class="card-title">Total de Entregas</span>
+                                <span class="card-value">124</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-icon" style="background-color: #fef3c7; color: #d97706;">🚚</div>
+                            <div class="card-info">
+                                <span class="card-title">Em Trânsito</span>
+                                <span class="card-value">18</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-icon" style="background-color: #dcfce7; color: #16a34a;">✅</div>
+                            <div class="card-info">
+                                <span class="card-title">Concluídas Hoje</span>
+                                <span class="card-value">45</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-icon" style="background-color: #f3e8ff; color: #9333ea;">👨‍✈️</div>
+                            <div class="card-info">
+                                <span class="card-title">Motoristas Ativos</span>
+                                <span class="card-value">12</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            <%- include('../partials/footer') %>
+    </div>

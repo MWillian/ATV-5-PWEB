@@ -1,0 +1,84 @@
+<%- include('../partials/header', { titulo: 'Listagem de Motoristas' }) %>
+
+  <div class="deliver-list-container">
+    <div class="page-header">
+      <h1>Listagem de Motoristas</h1>
+      <a href="/painel/motoristas/novo" class="btn btn-primary">+ Novo Motorista</a>
+    </div>
+
+    <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+      <div class="alert alert-success">
+        <p><%= sucesso %></p>
+      </div>
+    <% } %>
+
+    <% if (typeof erro !== 'undefined' && erro) { %>
+      <div class="alert alert-danger">
+        <p><%= erro %></p>
+      </div>
+    <% } %>
+    
+        <form method="GET" action="/painel/motoristas" class="filter-bar">
+          <div class="filter-group">
+            <label for="status">Filtrar por status:</label>
+            <select id="status" name="status">
+              <option value="" <%=!statusSelecionado ? 'selected' : '' %>>Todos</option>
+              <option value="ATIVO" <%=statusSelecionado==='ATIVO' ? 'selected' : '' %>>ATIVO</option>
+              <option value="INATIVO" <%=statusSelecionado==='INATIVO' ? 'selected' : '' %>>INATIVO</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-secondary">Filtrar</button>
+          <a href="/painel/motoristas" class="btn btn-link">Limpar</a>
+        </form>
+
+        <div class="data-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
+          <div class="data-grid-header">
+            <div class="data-grid-cell-header">ID</div>
+            <div class="data-grid-cell-header">Nome</div>
+            <div class="data-grid-cell-header">CPF</div>
+            <div class="data-grid-cell-header">Placa</div>
+            <div class="data-grid-cell-header">Status</div>
+            <div class="data-grid-cell-header">Ações</div>
+            <div class="data-grid-cell-header">Desativar</div>
+          </div>
+
+          <% if (motoristas && motoristas.length> 0) { %>
+            <% motoristas.forEach(motorista=> { %>
+              <div class="data-grid-row">
+                <div class="data-grid-cell"><strong>
+                    <%= motorista.id %>
+                  </strong></div>
+                <div class="data-grid-cell">
+                  <%= motorista.nome %>
+                </div>
+                <div class="data-grid-cell">
+                  <%= motorista.cpf %>
+                </div>
+                <div class="data-grid-cell">
+                  <%= motorista.placaVeiculo %>
+                </div>
+                <div class="data-grid-cell">
+                  <span class="badge badge-<%= motorista.status.toLowerCase() %>">
+                    <%= motorista.status %>
+                  </span>
+                </div>
+                <div class="data-grid-cell">
+                  <a href="/painel/motoristas/<%= motorista.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
+                </div>
+                <div class="data-grid-cell">
+                  <a href="/painel/motoristas/<%= motorista.id %>/inativar"
+                    class="btn btn-sm btn-outline">Desativar</a>
+                </div>
+              </div>
+              <% }); %>
+                <% } else { %>
+                  <div class="data-grid-row"
+                    style="grid-column: 1 / -1; justify-content: center; padding: 40px; color: var(--text-muted);">
+                    Nenhum motorista encontrado
+                  </div>
+                  <% } %>
+        </div>
+        <div class="footer-actions" style="margin-top: 1.5rem;">
+          <a href="/painel" class="btn btn-link">&larr; Voltar ao Painel</a>
+        </div>
+  </div>

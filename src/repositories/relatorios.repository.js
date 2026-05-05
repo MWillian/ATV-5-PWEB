@@ -23,7 +23,7 @@ export class RelatoriosRepository {
       distinct: ['motoristaId', 'entregaId'],
       select: {
         motoristaId: true,
-        motorista: { select: { nome: true } }
+        motorista: { select: { nome: true, cpf: true, placa_veiculo: true, status: true } }
       }
     });
 
@@ -38,13 +38,16 @@ export class RelatoriosRepository {
         existente.entregasEmAberto += 1;
       } else {
         agregados.set(motoristaId, {
-          motoristaId,
+          id: motoristaId,
           nome: evento.motorista?.nome ?? null,
+          cpf: evento.motorista?.cpf ?? null,
+          placaVeiculo: evento.motorista?.placa_veiculo ?? null,
+          status: evento.motorista?.status ?? 'ATIVO',
           entregasEmAberto: 1
         });
       }
     });
 
-    return Array.from(agregados.values()).sort((a, b) => a.motoristaId - b.motoristaId);
+    return Array.from(agregados.values()).sort((a, b) => a.id - b.id);
   }
 }
