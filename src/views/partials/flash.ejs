@@ -3,7 +3,7 @@
   <% const erro = Array.isArray(locals.flash.erro) ? locals.flash.erro : (locals.flash.erro ? [locals.flash.erro] : []); %>
 
   <% if (sucesso.length > 0) { %>
-    <div class="flash-messages flash-success" style="padding:10px; margin:10px 0; background:#e6ffed; border:1px solid #b7f0c9; color:#2b7a3a;">
+    <div class="alert alert-success">
       <% sucesso.forEach(msg => { %>
         <div><%= msg %></div>
       <% }); %>
@@ -11,7 +11,7 @@
   <% } %>
 
   <% if (erro.length > 0) { %>
-    <div class="flash-messages flash-error" style="padding:10px; margin:10px 0; background:#ffecec; border:1px solid #f5c2c2; color:#7a2b2b;">
+    <div class="alert alert-danger">
       <% erro.forEach(msg => { %>
         <div><%= msg %></div>
       <% }); %>

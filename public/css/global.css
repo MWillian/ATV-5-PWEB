@@ -1,6 +1,8 @@
 :root {
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
+  --primary-disabled: #b9cbff;
+  --danger-disabled: #fab2b2;
   --bg-body: #f8fafc;
   --white: #ffffff;
   --text-main: #1e293b;

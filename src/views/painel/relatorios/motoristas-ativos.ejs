@@ -1,55 +1,59 @@
-<h1>Relatório: Motoristas Ativos com Entregas em Aberto</h1>
+<%- include('../../partials/header', { titulo: 'Relatório: Motoristas Ativos' }) %>
 
-<section>
-  <h2>Motoristas com Entregas</h2>
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Relatório: Motoristas Ativos com Entregas em Aberto</h1>
+    <a href="/painel/relatorios" class="btn btn-link">&larr; Voltar ao Dashboard</a>
+  </div>
 
-  <% if (motoristas && motoristas.length > 0) { %>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>CPF</th>
-          <th>Placa do Veículo</th>
-          <th>Status</th>
-          <th>Entregas em Aberto</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody>
+  <section class="detail-section">
+    <h2>Motoristas com Entregas</h2>
+
+    <% if (motoristas && motoristas.length > 0) { %>
+      <div class="data-grid" style="grid-template-columns: 60px 1.5fr 140px 140px 100px 160px 130px;">
+        <div class="data-grid-header">
+          <div class="data-grid-cell-header">ID</div>
+          <div class="data-grid-cell-header">Nome</div>
+          <div class="data-grid-cell-header">CPF</div>
+          <div class="data-grid-cell-header">Placa do Veículo</div>
+          <div class="data-grid-cell-header">Status</div>
+          <div class="data-grid-cell-header">Entregas em Aberto</div>
+          <div class="data-grid-cell-header" style="justify-content: flex-end;">Ação</div>
+        </div>
+        
         <% motoristas.forEach(motorista => { %>
-          <tr>
-            <td><%= motorista.id %></td>
-            <td><%= motorista.nome %></td>
-            <td><%= motorista.cpf %></td>
-            <td><%= motorista.placaVeiculo %></td>
-            <td><%= motorista.status %></td>
-            <td><%= motorista._count?.entregaAssignada || 0 %></td>
-            <td>
-              <a href="/painel/motoristas/<%= motorista.id %>">Ver Detalhe</a>
-            </td>
-          </tr>
+          <div class="data-grid-row">
+            <div class="data-grid-cell"><strong><%= motorista.id %></strong></div>
+            <div class="data-grid-cell"><%= motorista.nome %></div>
+            <div class="data-grid-cell"><%= motorista.cpf %></div>
+            <div class="data-grid-cell"><%= motorista.placaVeiculo %></div>
+            <div class="data-grid-cell">
+              <span class="badge badge-<%= motorista.status?.toLowerCase() || 'ativo' %>">
+                <%= motorista.status || 'ATIVO' %>
+              </span>
+            </div>
+            <div class="data-grid-cell"><strong><%= motorista.entregasEmAberto || 0 %></strong></div>
+            <div class="data-grid-cell" style="justify-content: flex-end;">
+              <a href="/painel/motoristas/<%= motorista.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
+            </div>
+          </div>
         <% }); %>
-      </tbody>
-    </table>
+      </div>
 
-    <div style="margin-top: 20px;">
-      <p><strong>Total de Motoristas Ativos: <%= motoristas.length %></strong></p>
-      <p><strong>Total de Entregas em Aberto: </strong>
-        <% 
-          let totalEntregasAberto = 0;
-          motoristas.forEach(m => {
-            totalEntregasAberto += (m._count?.entregaAssignada || 0);
-          });
-        %>
-        <%= totalEntregasAberto %>
-      </p>
-    </div>
-  <% } else { %>
-    <p>Nenhum motorista ativo com entregas em aberto no momento.</p>
-  <% } %>
-</section>
-
-<div>
-  <a href="/painel/relatorios">Voltar ao Dashboard</a>
+      <div style="margin-top: 30px; padding: 20px; background-color: #f9f9f9; border-radius: 4px;">
+        <p><strong>Total de Motoristas Ativos:</strong> <%= motoristas.length %></p>
+        <p><strong>Total de Entregas em Aberto:</strong>
+          <% 
+            let totalEntregasAberto = 0;
+            motoristas.forEach(m => {
+              totalEntregasAberto += (m.entregasEmAberto || 0);
+            });
+          %>
+          <strong><%= totalEntregasAberto %></strong>
+        </p>
+      </div>
+    <% } else { %>
+      <p style="color: var(--text-muted); padding: 40px; text-align: center;">Nenhum motorista ativo com entregas em aberto no momento.</p>
+    <% } %>
+  </section>
 </div>

@@ -1,69 +1,104 @@
-<h1>Detalhe do Motorista</h1>
+<%- include('../partials/header', { titulo: 'Detalhe do Motorista' }) %>
 
-<% if (typeof sucesso !== 'undefined' && sucesso) { %>
-  <div class="sucesso">
-    <p><%= sucesso %></p>
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Detalhe do Motorista #<%= motorista.id %></h1>
+    <a href="/painel/motoristas" class="btn btn-link">&larr; Voltar</a>
   </div>
-<% } %>
 
-<section>
-  <p><strong>ID:</strong> <%= motorista.id %></p>
-  <p><strong>Nome:</strong> <%= motorista.nome %></p>
-  <p><strong>CPF:</strong> <%= motorista.cpf %></p>
-  <p><strong>Placa:</strong> <%= motorista.placaVeiculo %></p>
-  <p><strong>Status:</strong> <%= motorista.status %></p>
-</section>
+  <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+    <div class="alert alert-success">
+      <p><%= sucesso %></p>
+    </div>
+  <% } %>
 
-<section>
-  <h2>Histórico de Entregas</h2>
+  <section class="detail-section">
+    <h2>Informações do Motorista</h2>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <strong>ID:</strong>
+        <p><%= motorista.id %></p>
+      </div>
+      <div class="detail-item">
+        <strong>Nome:</strong>
+        <p><%= motorista.nome %></p>
+      </div>
+      <div class="detail-item">
+        <strong>CPF:</strong>
+        <p><%= motorista.cpf %></p>
+      </div>
+      <div class="detail-item">
+        <strong>Placa:</strong>
+        <p><%= motorista.placaVeiculo %></p>
+      </div>
+      <div class="detail-item">
+        <strong>Status:</strong>
+        <p>
+          <span class="badge badge-<%= motorista.status.toLowerCase() %>">
+            <%= motorista.status %>
+          </span>
+        </p>
+      </div>
+    </div>
+  </section>
 
-  <form method="GET" action="/painel/motoristas/<%= motorista.id %>">
-    <label for="status">Filtrar por status:</label>
-    <select id="status" name="status">
-      <option value="" <%= !statusSelecionado ? 'selected' : '' %>>Todos</option>
-      <option value="CRIADA" <%= statusSelecionado === 'CRIADA' ? 'selected' : '' %>>CRIADA</option>
-      <option value="EM_TRANSITO" <%= statusSelecionado === 'EM_TRANSITO' ? 'selected' : '' %>>EM TRÂNSITO</option>
-      <option value="ENTREGUE" <%= statusSelecionado === 'ENTREGUE' ? 'selected' : '' %>>ENTREGUE</option>
-      <option value="CANCELADA" <%= statusSelecionado === 'CANCELADA' ? 'selected' : '' %>>CANCELADA</option>
-    </select>
-    <button type="submit">Filtrar</button>
-    <a href="/painel/motoristas/<%= motorista.id %>">Limpar</a>
-  </form>
+  <section class="detail-section">
+    <h2>Histórico de Entregas</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Descrição</th>
-        <th>Origem</th>
-        <th>Destino</th>
-        <th>Status</th>
-        <th>Data Criação</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (entregas && entregas.length > 0) { %>
-        <% entregas.forEach(entrega => { %>
+    <form method="GET" action="/painel/motoristas/<%= motorista.id %>" class="filter-bar">
+      <div class="filter-group">
+        <label for="status">Filtrar por status:</label>
+        <select id="status" name="status">
+          <option value="" <%= !statusSelecionado ? 'selected' : '' %>>Todos</option>
+          <option value="CRIADA" <%= statusSelecionado === 'CRIADA' ? 'selected' : '' %>>CRIADA</option>
+          <option value="EM_TRANSITO" <%= statusSelecionado === 'EM_TRANSITO' ? 'selected' : '' %>>EM TRÂNSITO</option>
+          <option value="ENTREGUE" <%= statusSelecionado === 'ENTREGUE' ? 'selected' : '' %>>ENTREGUE</option>
+          <option value="CANCELADA" <%= statusSelecionado === 'CANCELADA' ? 'selected' : '' %>>CANCELADA</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-secondary">Filtrar</button>
+      <a href="/painel/motoristas/<%= motorista.id %>" class="btn btn-link">Limpar</a>
+    </form>
+
+    <div class="table-container">
+      <table>
+        <thead>
           <tr>
-            <td><%= entrega.id %></td>
-            <td><%= entrega.descricao %></td>
-            <td><%= entrega.origem %></td>
-            <td><%= entrega.destino %></td>
-            <td><%= entrega.status %></td>
-            <td><%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %></td>
-            <td><a href="/painel/entregas/<%= entrega.id %>">Ver</a></td>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Status</th>
+            <th>Data Criação</th>
+            <th style="text-align: right;">Ações</th>
           </tr>
-        <% }); %>
-      <% } else { %>
-        <tr>
-          <td colspan="7">Nenhuma entrega encontrada para este motorista</td>
-        </tr>
-      <% } %>
-    </tbody>
-  </table>
-</section>
-
-<div>
-  <a href="/painel/motoristas">Voltar</a>
+        </thead>
+        <tbody>
+          <% if (entregas && entregas.length > 0) { %>
+            <% entregas.forEach(entrega => { %>
+              <tr>
+                <td><strong><%= entrega.id %></strong></td>
+                <td><%= entrega.descricao %></td>
+                <td><%= entrega.origem %></td>
+                <td><%= entrega.destino %></td>
+                <td>
+                  <span class="badge badge-<%= entrega.status.toLowerCase() %>">
+                    <%= entrega.status.replace('_', ' ') %>
+                  </span>
+                </td>
+                <td><%= entrega.createdAt ? new Date(entrega.createdAt).toLocaleDateString('pt-BR') : '-' %></td>
+                <td style="text-align: right;">
+                  <a href="/painel/entregas/<%= entrega.id %>" class="btn btn-sm btn-outline">Ver Detalhes</a>
+                </td>
+              </tr>
+            <% }); %>
+          <% } else { %>
+            <tr>
+              <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Nenhuma entrega encontrada para este motorista</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>

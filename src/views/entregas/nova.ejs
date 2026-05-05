@@ -1,27 +1,40 @@
-<h1>Nova Entrega</h1>
+<%- include('../partials/header', { titulo: 'Nova Entrega' }) %>
 
-<% if (typeof erro !== 'undefined' && erro) { %>
-  <div class="erro">
-    <p><%= erro %></p>
-  </div>
-<% } %>
-
-<form method="POST" action="/painel/entregas">
-  <div>
-    <label for="descricao">Descrição:</label>
-    <input type="text" id="descricao" name="descricao" required value="<%= entrega.descricao || '' %>">
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Criar Nova Entrega</h1>
+    <a href="/painel/entregas" class="btn btn-link">&larr; Voltar</a>
   </div>
 
-  <div>
-    <label for="origem">Origem:</label>
-    <input type="text" id="origem" name="origem" required value="<%= entrega.origem || '' %>">
-  </div>
+  <% if (typeof erro !== 'undefined' && erro) { %>
+    <div class="alert alert-danger">
+      <p><%= erro %></p>
+    </div>
+  <% } %>
 
-  <div>
-    <label for="destino">Destino:</label>
-    <input type="text" id="destino" name="destino" required value="<%= entrega.destino || '' %>">
-  </div>
+  <div class="form-wrapper">
+    <section class="detail-card">
+      <form method="POST" action="/painel/entregas" class="form-container">
+        <div class="form-group">
+          <label for="descricao" class="detail-label">Descrição:</label>
+          <input type="text" id="descricao" name="descricao" required value="<%= entrega.descricao || '' %>" class="form-input">
+        </div>
 
-  <button type="submit">Criar Entrega</button>
-  <a href="/painel/entregas">Cancelar</a>
-</form>
+        <div class="form-group">
+          <label for="origem" class="detail-label">Origem:</label>
+          <input type="text" id="origem" name="origem" required value="<%= entrega.origem || '' %>" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="destino" class="detail-label">Destino:</label>
+          <input type="text" id="destino" name="destino" required value="<%= entrega.destino || '' %>" class="form-input">
+        </div>
+
+        <div class="form-actions">
+          <a href="/painel/entregas" class="btn btn-outline">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Criar Entrega</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

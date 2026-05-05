@@ -1,55 +1,63 @@
-<h1>Relatório: Entregas por Status</h1>
+<%- include('../../partials/header', { titulo: 'Relatório: Entregas por Status' }) %>
 
-<section>
-  <h2>Resumo</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Status</th>
-        <th>Quantidade</th>
-        <th>Percentual</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>CRIADA</td>
-        <td><%= entregasPorStatus.CRIADA %></td>
-        <td><%= total > 0 ? ((entregasPorStatus.CRIADA / total) * 100).toFixed(2) : 0 %>%</td>
-      </tr>
-      <tr>
-        <td>EM TRÂNSITO</td>
-        <td><%= entregasPorStatus.EM_TRANSITO %></td>
-        <td><%= total > 0 ? ((entregasPorStatus.EM_TRANSITO / total) * 100).toFixed(2) : 0 %>%</td>
-      </tr>
-      <tr>
-        <td>ENTREGUE</td>
-        <td><%= entregasPorStatus.ENTREGUE %></td>
-        <td><%= total > 0 ? ((entregasPorStatus.ENTREGUE / total) * 100).toFixed(2) : 0 %>%</td>
-      </tr>
-      <tr>
-        <td>CANCELADA</td>
-        <td><%= entregasPorStatus.CANCELADA %></td>
-        <td><%= total > 0 ? ((entregasPorStatus.CANCELADA / total) * 100).toFixed(2) : 0 %>%</td>
-      </tr>
-      <tr style="background-color: #f5f5f5; font-weight: bold;">
-        <td>TOTAL</td>
-        <td><%= total %></td>
-        <td>100.00%</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div style="margin-top: 20px;">
-    <h3>Ações Rápidas</h3>
-    <ul>
-      <li><a href="/painel/entregas?status=CRIADA">Ver Entregas Criadas</a></li>
-      <li><a href="/painel/entregas?status=EM_TRANSITO">Ver Entregas em Trânsito</a></li>
-      <li><a href="/painel/entregas?status=ENTREGUE">Ver Entregas Entregues</a></li>
-      <li><a href="/painel/entregas?status=CANCELADA">Ver Entregas Canceladas</a></li>
-    </ul>
+<div class="deliver-list-container">
+  <div class="page-header">
+    <h1>Relatório: Entregas por Status</h1>
+    <a href="/painel/relatorios" class="btn btn-link">&larr; Voltar ao Dashboard</a>
   </div>
-</section>
 
-<div>
-  <a href="/painel/relatorios">Voltar ao Dashboard</a>
+  <section class="detail-section">
+    <h2>Resumo</h2>
+    <div class="data-grid" style="grid-template-columns: 1.5fr 1fr 1fr;">
+      <div class="data-grid-header">
+        <div class="data-grid-cell-header">Status</div>
+        <div class="data-grid-cell-header">Quantidade</div>
+        <div class="data-grid-cell-header">Percentual</div>
+      </div>
+      
+      <div class="data-grid-row">
+        <div class="data-grid-cell">CRIADA</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.CRIADA %></div>
+        <div class="data-grid-cell"><%= total > 0 ? ((entregasPorStatus.CRIADA / total) * 100).toFixed(2) : 0 %>%</div>
+      </div>
+      <div class="data-grid-row">
+        <div class="data-grid-cell">EM TRÂNSITO</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.EM_TRANSITO %></div>
+        <div class="data-grid-cell"><%= total > 0 ? ((entregasPorStatus.EM_TRANSITO / total) * 100).toFixed(2) : 0 %>%</div>
+      </div>
+      <div class="data-grid-row">
+        <div class="data-grid-cell">ENTREGUE</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.ENTREGUE %></div>
+        <div class="data-grid-cell"><%= total > 0 ? ((entregasPorStatus.ENTREGUE / total) * 100).toFixed(2) : 0 %>%</div>
+      </div>
+      <div class="data-grid-row">
+        <div class="data-grid-cell">CANCELADA</div>
+        <div class="data-grid-cell"><%= entregasPorStatus.CANCELADA %></div>
+        <div class="data-grid-cell"><%= total > 0 ? ((entregasPorStatus.CANCELADA / total) * 100).toFixed(2) : 0 %>%</div>
+      </div>
+      <div class="data-grid-row">
+        <div class="data-grid-cell" style="background-color: #f5f5f5; font-weight: bold;">TOTAL</div>
+        <div class="data-grid-cell" style="background-color: #f5f5f5; font-weight: bold;"><%= total %></div>
+        <div class="data-grid-cell" style="background-color: #f5f5f5; font-weight: bold;">100.00%</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <h3 style="margin-bottom: 20px;">Ações Rápidas</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <a href="/painel/entregas?status=CRIADA" class="btn btn-outline" style="width: 100%; justify-content: center; text-align: center;">Entregas Criadas</a>
+        </div>
+        <div class="detail-item">
+          <a href="/painel/entregas?status=EM_TRANSITO" class="btn btn-outline" style="width: 100%; justify-content: center; text-align: center;">Entregas em Trânsito</a>
+        </div>
+        <div class="detail-item">
+          <a href="/painel/entregas?status=ENTREGUE" class="btn btn-outline" style="width: 100%; justify-content: center; text-align: center;">Entregas Entregues</a>
+        </div>
+        <div class="detail-item">
+          <a href="/painel/entregas?status=CANCELADA" class="btn btn-outline" style="width: 100%; justify-content: center; text-align: center;">Entregas Canceladas</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
